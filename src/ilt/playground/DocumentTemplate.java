@@ -20,18 +20,22 @@ public class DocumentTemplate {
 		List<Variable> result = new ArrayList<>();
 		for (Clause c : clauses) {
 			result.addAll(c.getOpenQuestions(answers));
+			if (!result.isEmpty()) {
+				break;
+			}
 		}
 		return result;
 	}
 
 	public String resolve(Map<Variable, String> answers) {
 		StringBuilder result = new StringBuilder();
+		int index = 0;
 		for (Clause c : clauses) {
 			String next = c.resolve(answers);
 			if (next == null) {
 				return null;
 			}
-			result.append(next);
+			result.append(++index + ". " + next + "\n\n");
 		}
 		return result.toString();
 	}

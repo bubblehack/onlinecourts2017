@@ -1,7 +1,7 @@
 package ilt.playground;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Data {
 
@@ -11,8 +11,9 @@ public class Data {
 		dict.update(Data.class.getResourceAsStream("clauses.text"));
 		
 		
-		Set<String> rootClauses = new HashSet<>();
-		rootClauses.add("ContractClaimant");
+		List<String> rootClauses = new ArrayList<>();
+		//rootClauses.add("ContractClaimant");
+		rootClauses.add("Loss");
 		
 		return new DocumentTemplate(dict.generateList(rootClauses));
 	}

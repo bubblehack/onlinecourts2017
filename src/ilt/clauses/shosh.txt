@@ -1,0 +1,9 @@
+
+clause Loss 
+  question `What did you lose out because of what you have described to me today? In financial terms please?`
+  
+  if `I lost money` then `The Claimant suffered financial loss in the amount of $amount`
+  var amount `What was the amount you lost?`
+  end 
+
+end

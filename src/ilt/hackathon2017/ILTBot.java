@@ -1,5 +1,7 @@
 package ilt.hackathon2017;
 
+import java.util.List;
+
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -33,11 +35,18 @@ public class ILTBot extends TelegramLongPollingBot {
 	
 	@Override
 	public void onUpdateReceived(Update update) {
+		String error = null;
 		String text = update.getMessage().getText();
 		if (question != null) {
 			if (question instanceof MultiVariable) {
-				Integer idx = Integer.parseInt(text) - 1;
-				engine.acceptAnswer(question, ((MultiVariable)question).options.get(idx));
+				List<String> options = ((MultiVariable)question).options;
+				try {
+					Integer idx = Integer.parseInt(text) - 1;
+
+					engine.acceptAnswer(question, options.get(idx));
+				} catch (Exception e) {
+					error = "Sorry, you need to give me a number between 1 and " + options.size();
+				}
 			} else {
 				engine.acceptAnswer(question, text);
 			}
@@ -45,18 +54,21 @@ public class ILTBot extends TelegramLongPollingBot {
 		
 		SendMessage s = new SendMessage();
 		question = engine.getNextQuestion();
+		StringBuilder sb = new StringBuilder();
+		if (error != null) {
+			sb.append(error + "\n");
+		}
 		if (question instanceof MultiVariable) {
-			StringBuilder sb = new StringBuilder();
 			sb.append(question.questionText.text);
 			sb.append("\n");
 			int i = 0;
 			for (String opt : ((MultiVariable)question).options) {
 				sb.append(++i + ": " + opt + "\n");
 			}
-			s.setText(sb.toString());
 		} else {
-			s.setText(question.questionText.text);
+			sb.append(question.questionText.text);
 		}
+		s.setText(sb.toString());
 		s.setChatId(update.getMessage().getChatId());
 		try {
 			sendMessage(s);

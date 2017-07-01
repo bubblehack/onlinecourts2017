@@ -7,15 +7,34 @@ clause Employment
     
     if `I am employed` then `The claimant is employed at $employer`
 		var employer `Where are you employed?`
-		end
-    
 	end
+end
 
 clause ContractClaimant
-    template `claimant: $name of $address $employment`   
+    template `Claimant: $name of $address $employment`   
     
-    		sub employment Employment
+    	sub employment Employment
 	    var name `What is your name?`
 	    var address `What is your address?`
-		end
 	end
+end
+ 
+clause ContractOverview
+    template `By a written agreement date $contract_date between the Claimant and Defendant for $contract_purpose. The claimant agreed $claimant_agreement. The defendant agreed $defendant_agreement.`   
+    
+	    var contract_date `What is the contract date?`
+	    var contract_purpose `What was the purpose of the contract?`
+	    var claimant_agreement `What did the claimant agree in the contract?`
+	    var defendant_agreement `What did the defendant agree in the contract?`
+		end
+	end 
+
+
+clause Loss 
+  question `What did you lose out because of what you have described to me today? In financial terms please?`
+  
+  if `I lost money` then `The Claimant suffered financial loss in the amount of $amount`
+  var amount `What was the amount you lost?`
+  end 
+
+end
