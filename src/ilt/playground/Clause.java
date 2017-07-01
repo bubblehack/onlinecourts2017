@@ -11,6 +11,8 @@ public class Clause {
 	Variable globalQuestion; //null if always true
 	
 	Map<String, Template> templates = new HashMap<>(); //key is "" if globalQuestion is null.
+
+	public boolean subclause;
 	
 	public List<Variable> getOpenQuestions(Map<Variable, String> answers) {
 		String key = "";
@@ -66,5 +68,11 @@ public class Clause {
 		} else if (!templates.equals(other.templates))
 			return false;
 		return true;
+
+	}
+
+	public Clause create(String path) {
+		Clause c = new Clause();
+		
 	}
 }
