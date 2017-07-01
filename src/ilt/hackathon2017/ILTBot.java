@@ -37,7 +37,7 @@ public class ILTBot extends TelegramLongPollingBot {
 	public void onUpdateReceived(Update update) {
 		String error = null;
 		String text = update.getMessage().getText();
-		if (question != null) {
+		if (question != null || text.startsWith("/")) {
 			if (question instanceof MultiVariable) {
 				List<String> options = ((MultiVariable)question).options;
 				try {

@@ -38,3 +38,36 @@ clause Loss
   end 
 
 end
+
+ 
+clause ClaimDetails 
+ 
+template `The Defendant is $defendantname of $defendantaddress`
+var defendantname `who do you want to bring a claim against?`
+var defendant address `what the address of that person?`
+end 
+ 
+end 
+ 
+clause Typecontract 
+
+  question `How did you agree the contract?`
+ 
+  if `We had a formal written contract` then `written contract dated` end
+  if `We agreed it in an email` then `written contract dated` end
+  if `We had a gentleman’s agreement and a handshake but didn’t write it down` then `oral contract made on` end
+  if `We agreed it in conversation` then `oral contract made on` end
+ 
+end 
+ 
+clause Contract 
+ 
+  template `By $typecontract $datecontract between the Claimant and the Defendant for $contractpurpose, the Claimant agreed to $contentcontractclaimant and the Defendant agreed to $contentcontractdefendant`
+    var contractpurpose `what was the contract for?`
+    var contentcontractclaimant `what did you agree to do for the Defendant?`
+    var contentcontractdefendant `what did the Defendant agree to do for you?` 
+    sub typecontract Typecontract 
+    var datecontract `what date did you agree this?`
+  end 
+end
+ 
