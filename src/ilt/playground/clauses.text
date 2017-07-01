@@ -1,6 +1,7 @@
 
 document
   clause Employment
+  clause ContractClaimant
 end
 
 clause Employment
