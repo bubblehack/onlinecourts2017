@@ -28,6 +28,6 @@ public class Test {
 		
 		Clause claimant = new Clause();
 		claimant.globalQuestion = null;
-		claimant.templates.put("", new Template());
+//		claimant.templates.put("", contractClaimantTemplat);
 	}
 }

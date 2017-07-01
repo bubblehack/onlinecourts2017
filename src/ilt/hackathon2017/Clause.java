@@ -1,5 +1,6 @@
 package ilt.hackathon2017;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Clause {
@@ -11,5 +12,15 @@ public class Clause {
 	public String render(Map<Question, String> answers) {
 		return "";
 	}
+
+	public Clause(String type, String template) {
+		super();
+		this.type = type;
+		this.template = template;
+		this.variables = new HashMap<>();
+		
+	}
+	
+	
 	
 }
