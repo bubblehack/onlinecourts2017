@@ -15,7 +15,7 @@ public class ClauseDictionary {
 		clauses.putAll(ClauseParser.parseClauses(in));
 	}
 	
-	public List<Clause> generateList(Set<String> rootClauses) {
+	public List<Clause> generateList(List<String> rootClauses) {
 		List<Clause> roots = new ArrayList<>();
 		
 		for (String rootName : rootClauses) {
