@@ -1,0 +1,23 @@
+
+clause Employment
+    question `What is the employment status?`
+
+    if `I am self employed` then `The claimant is self-employed` end
+    if `I am unemployed` then `The claimant is unemployed` end
+    
+    if `I am employed` then `The claimant is employed at $employer`
+		var employer `Where are you employed?`
+		end
+    
+	end
+
+
+clause ContractClaimant
+    template `claimant: $name of $address $employment`   
+    
+	sub employment Employment
+	var name `What is your name?`
+	var address `What is your address?`
+	end
+	end
+
