@@ -1,8 +1,10 @@
 package ilt.playground;
 
-public class Test {
+import java.util.Arrays;
 
-	public static void main(String[] args) {
+public class Data {
+
+	public DocumentTemplate doc() {
 		
 		Template employmentEmployed = new Template();
 		employmentEmployed.templateString = "is employed at $employer";
@@ -29,5 +31,7 @@ public class Test {
 		Clause claimant = new Clause();
 		claimant.globalQuestion = null;
 		claimant.templates.put("", new Template());
+		
+		return new DocumentTemplate(Arrays.asList(claimant));
 	}
 }
