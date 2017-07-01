@@ -2,8 +2,8 @@
 clause Employment
     question `What is the employment status?`
 
-    if `I am self employed` then `The claimant is self-employed` end
-    if `I am unemployed` then `The claimant is unemployed` end
+    if `I am self employed` template `The claimant is self-employed` end
+    if `I am unemployed` template `The claimant is unemployed` end
     
     if `I am employed` then `The claimant is employed at $employer`
 		var employer `Where are you employed?`

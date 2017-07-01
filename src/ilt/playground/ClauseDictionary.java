@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ClauseDictionary {
 	
 	private Map<String, Clause> clauses = new HashMap<>();
+	private List<String> rootClauses;
+	
 	
 	public void update(InputStream in) {
-		clauses.putAll(ClauseParser.parseClauses(in));
+		ClauseParser parser = ClauseParser.parseClauses(in);
+		clauses.putAll(parser.map);
+		rootClauses = parser.rootClauses;
+		System.err.println(rootClauses);
 	}
 	
-	public List<Clause> generateList(List<String> rootClauses) {
+	public List<Clause> generateList() {
 		List<Clause> roots = new ArrayList<>();
 		
 		for (String rootName : rootClauses) {

@@ -7,8 +7,9 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import ilt.playground.Data;
+import ilt.playground.ClauseDictionary;
 import ilt.playground.DocumentEngine;
+import ilt.playground.DocumentTemplate;
 import ilt.playground.MultiVariable;
 import ilt.playground.Variable;
 
@@ -18,7 +19,10 @@ public class ILTBot extends TelegramLongPollingBot {
 
 	public ILTBot() {
 		engine = new DocumentEngine();
-		engine.template = Data.doc();
+		ClauseDictionary dict = new ClauseDictionary();
+		dict.update(ILTBot.class.getResourceAsStream("/ilt/playground/clauses.text"));
+		
+		engine.template = new DocumentTemplate(dict.generateList());
 	}
 
 	@Override

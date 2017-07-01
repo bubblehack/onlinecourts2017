@@ -1,4 +1,8 @@
 
+document
+  clause Employment
+end
+
 clause Employment
     question `What is your employment status?`
 
@@ -44,7 +48,7 @@ clause ClaimDetails
  
 template `The Defendant is $defendantname of $defendantaddress`
 var defendantname `who do you want to bring a claim against?`
-var defendant address `what the address of that person?`
+var defendantaddress `what the address of that person?`
 end 
  
 end 
