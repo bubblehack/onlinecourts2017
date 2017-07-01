@@ -53,4 +53,41 @@ public class Variable {
 			return null;
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clause == null) ? 0 : clause.hashCode());
+		result = prime * result + ((questionText == null) ? 0 : questionText.hashCode());
+		result = prime * result + ((scope == null) ? 0 : scope.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Variable other = (Variable) obj;
+		if (clause == null) {
+			if (other.clause != null)
+				return false;
+		} else if (!clause.equals(other.clause))
+			return false;
+		if (questionText == null) {
+			if (other.questionText != null)
+				return false;
+		} else if (!questionText.equals(other.questionText))
+			return false;
+		if (scope == null) {
+			if (other.scope != null)
+				return false;
+		} else if (!scope.equals(other.scope))
+			return false;
+		return true;
+	}
 }

@@ -21,6 +21,7 @@ public class DocumentEngine {
 		}
 		refresh();
 		return openQuestions.get(0);
+		
 	}
 	
 	public void acceptAnswer(Variable question, String answer) {

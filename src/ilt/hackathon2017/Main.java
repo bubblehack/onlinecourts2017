@@ -20,7 +20,6 @@ public class Main {
             BotLogger.severe("TAG:", e);
         }
         ApiContextInitializer.init();
-		System.out.println("Hello");
 		TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
 		telegramBotsApi.registerBot(new ILTBot());
 	}

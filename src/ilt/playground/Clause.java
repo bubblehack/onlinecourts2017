@@ -1,5 +1,6 @@
 package ilt.playground;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,9 @@ public class Clause {
 			if (answers.containsKey(globalQuestion)) {
 				key = answers.get(globalQuestion);
 			} else {
-				return Arrays.asList(globalQuestion);
+				MultiVariable v = MultiVariable.of(globalQuestion);
+				v.options = new ArrayList<>(templates.keySet());
+				return Arrays.asList(v);
 			}
 		}
 		return templates.get(key).getOpenQuestions(answers);
@@ -32,5 +35,36 @@ public class Clause {
 			return null;
 		}
 		return templates.get(key).resolve(answers);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((globalQuestion == null) ? 0 : globalQuestion.hashCode());
+		result = prime * result + ((templates == null) ? 0 : templates.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Clause other = (Clause) obj;
+		if (globalQuestion == null) {
+			if (other.globalQuestion != null)
+				return false;
+		} else if (!globalQuestion.equals(other.globalQuestion))
+			return false;
+		if (templates == null) {
+			if (other.templates != null)
+				return false;
+		} else if (!templates.equals(other.templates))
+			return false;
+		return true;
 	}
 }

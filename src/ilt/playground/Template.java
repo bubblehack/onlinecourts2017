@@ -29,10 +29,53 @@ public class Template {
 				if (!answers.containsKey(v) && v.resolve(answers) == null) {
 					return null;
 				}
-				tmpResult = tmpResult.replaceAll(key, answers.get(v));
+				String match;
+				if (v.questionText != null) {
+					match = "\\$" + key;
+				} else {
+					match = "@" + key;
+				}
+				tmpResult = tmpResult.replaceAll(match, answers.get(v));
 			}
 			result = tmpResult;
 		}
 		return result;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((replacements == null) ? 0 : replacements.hashCode());
+		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
+		result = prime * result + ((templateString == null) ? 0 : templateString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Template other = (Template) obj;
+		if (replacements == null) {
+			if (other.replacements != null)
+				return false;
+		} else if (!replacements.equals(other.replacements))
+			return false;
+		if (result == null) {
+			if (other.result != null)
+				return false;
+		} else if (!result.equals(other.result))
+			return false;
+		if (templateString == null) {
+			if (other.templateString != null)
+				return false;
+		} else if (!templateString.equals(other.templateString))
+			return false;
+		return true;
 	}
 }

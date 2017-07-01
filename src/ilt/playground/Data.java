@@ -11,10 +11,10 @@ public class Data {
 		employmentEmployed.replacements.put("employer", Variable.simple("Where are you employed?", "claimant.employment"));
 
 		Template employmentSelfEmployed = new Template();
-		employmentEmployed.templateString = "is self employed";
+		employmentSelfEmployed.templateString = "is self employed";
 
 		Template employmentUnemployed = new Template();
-		employmentEmployed.templateString = "is unemployed";
+		employmentUnemployed.templateString = "is unemployed";
 		
 		Clause employmentClause = new Clause();
 		employmentClause.globalQuestion = Variable.simple("What is your employment status?", "claimant.employment");
