@@ -23,9 +23,11 @@ public class ILTBot extends TelegramLongPollingBot {
 		engine = new DocumentEngine();
 		ClauseDictionary dict = new ClauseDictionary();
 		try {
-			dict.update(new FileInputStream("/tmp/clauses.rtf"));
+			dict.update(new FileInputStream("/private/tmp/clauses.rtf"));
 			
-		} catch (FileNotFoundException e) {}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		dict.update(ILTBot.class.getResourceAsStream("/ilt/playground/clauses.text"));
 		

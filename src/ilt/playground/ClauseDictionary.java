@@ -9,13 +9,17 @@ import java.util.Map;
 public class ClauseDictionary {
 	
 	private Map<String, Clause> clauses = new HashMap<>();
-	private List<String> rootClauses;
+	private List<String> rootClauses = new ArrayList<>();
 	
 	
 	public void update(InputStream in) {
 		ClauseParser parser = ClauseParser.parseClauses(in);
 		clauses.putAll(parser.map);
-		rootClauses = parser.rootClauses;
+		for (String s : parser.rootClauses) {
+			if (!rootClauses.contains(s)) {
+				rootClauses.add(s);
+			}
+		}
 		System.err.println(rootClauses);
 	}
 	
