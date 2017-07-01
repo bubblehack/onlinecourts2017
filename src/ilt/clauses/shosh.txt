@@ -1,0 +1,7 @@
+clause ParticularsOfLoss
+
+  template `The Claimant has lost $money`
+
+    var money `How much money did you lose because of the breach?`
+  end
+end 
