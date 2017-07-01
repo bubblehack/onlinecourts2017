@@ -13,7 +13,7 @@ public class Data {
 		
 		List<String> rootClauses = new ArrayList<>();
 		//rootClauses.add("ContractClaimant");
-		rootClauses.add("ParticularsOfLoss");
+		rootClauses.add("Loss");
 		
 		return new DocumentTemplate(dict.generateList(rootClauses));
 	}

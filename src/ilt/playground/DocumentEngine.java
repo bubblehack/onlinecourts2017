@@ -25,7 +25,13 @@ public class DocumentEngine {
 	}
 	
 	public void acceptAnswer(Variable question, String answer) {
-		answers.put(question.canonical(), answer);
+		if (answer.startsWith("/")) {
+			if (answer.equals("/reset")) {
+				answers.clear();
+			}
+		} else {
+			answers.put(question.canonical(), answer);
+		}
 		result = template.resolve(answers);
 	}
 	
