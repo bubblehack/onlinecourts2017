@@ -1,5 +1,7 @@
 package ilt.hackathon2017;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -20,6 +22,11 @@ public class ILTBot extends TelegramLongPollingBot {
 	public ILTBot() {
 		engine = new DocumentEngine();
 		ClauseDictionary dict = new ClauseDictionary();
+		try {
+			dict.update(new FileInputStream("/tmp/clauses.txt"));
+			
+		} catch (FileNotFoundException e) {}
+		
 		dict.update(ILTBot.class.getResourceAsStream("/ilt/playground/clauses.text"));
 		
 		engine.template = new DocumentTemplate(dict.generateList());
