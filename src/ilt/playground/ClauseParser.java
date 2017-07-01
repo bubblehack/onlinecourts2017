@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClauseParser {
 	Scanner s;
@@ -26,6 +28,7 @@ public class ClauseParser {
 		String type = s.next();
 		String name = s.next();
 		Clause c = new Clause();
+		c.name = name;
 
 		if (type.equals("clause")) {
 			for (String command = s.next(); !command.equals("end"); command = s.next()) {
@@ -61,8 +64,13 @@ public class ClauseParser {
 				t.replacements.put(s.next(), Variable.simple(parseString(), ""));
 				break;
 			}
+			case "sub": {
+				t.replacements.put(s.next(), Variable.clause(map.get(s.next()), ""));
+				break;
+			}
 			}
 		}
+		
 		return t;
 	}
 	

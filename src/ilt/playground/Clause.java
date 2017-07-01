@@ -5,14 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Clause {
 	
 	Variable globalQuestion; //null if always true
 	
+	String name;
+	
 	Map<String, Template> templates = new HashMap<>(); //key is "" if globalQuestion is null.
 
-	public boolean subclause;
 	
 	public List<Variable> getOpenQuestions(Map<Variable, String> answers) {
 		String key = "";
@@ -74,5 +76,14 @@ public class Clause {
 	public Clause create(String path) {
 		Clause c = new Clause();
 		
+		if (globalQuestion != null) {
+			c.globalQuestion = globalQuestion.create(path + "." + name);
+		}
+		
+		for (Entry<String, Template> t : templates.entrySet()) {
+			c.templates.put(t.getKey(), t.getValue().create(path + "." + name));
+		}
+		
+		return c;
 	}
 }

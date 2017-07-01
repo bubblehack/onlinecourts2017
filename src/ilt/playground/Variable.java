@@ -90,4 +90,14 @@ public class Variable {
 			return false;
 		return true;
 	}
+
+	public Variable create(String path) {
+		Variable v = new Variable();
+		if (clause != null) 
+			v.clause = clause.create(path);
+		v.questionText = questionText;
+		v.scope = path + "." + scope;
+		
+		return v;
+	}
 }

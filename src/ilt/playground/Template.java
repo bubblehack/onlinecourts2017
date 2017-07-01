@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Template {
 
@@ -77,5 +78,14 @@ public class Template {
 		} else if (!templateString.equals(other.templateString))
 			return false;
 		return true;
+	}
+
+	public Template create(String path) {
+		Template t = new Template();
+		t.templateString = templateString;
+		for (Entry<String, Variable> var : replacements.entrySet())
+			t.replacements.put(var.getKey(), var.getValue().create(path));
+		
+		return t;
 	}
 }
