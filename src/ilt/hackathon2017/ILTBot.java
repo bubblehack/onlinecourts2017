@@ -2,10 +2,13 @@ package ilt.hackathon2017;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -53,12 +56,10 @@ public class ILTBot extends TelegramLongPollingBot {
 		if (question != null || text.startsWith("/")) {
 			if (question instanceof MultiVariable) {
 				List<String> options = ((MultiVariable)question).options;
-				try {
-					Integer idx = Integer.parseInt(text) - 1;
-
-					engine.acceptAnswer(question, options.get(idx));
-				} catch (Exception e) {
-					error = "Sorry, you need to give me a number between 1 and " + options.size();
+				if (!options.contains(text)) {
+					error = "Sorry, you need to use one of the provided answers ";
+				} else {
+					engine.acceptAnswer(question, text);
 				}
 			} else {
 				engine.acceptAnswer(question, text);
@@ -72,12 +73,25 @@ public class ILTBot extends TelegramLongPollingBot {
 			sb.append(error + "\n");
 		}
 		if (question instanceof MultiVariable) {
+			
+
+			ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
+			markup.setSelective(true)
+			.setResizeKeyboard(true)
+			.setOneTimeKeyboard(true);
+			
+			
 			sb.append(question.questionText.text);
 			sb.append("\n");
-			int i = 0;
+			List<KeyboardRow> rows = new ArrayList<>();
 			for (String opt : ((MultiVariable)question).options) {
-				sb.append(++i + ": " + opt + "\n");
+				KeyboardRow row = new KeyboardRow();
+				row.add(opt);
+				rows.add(row);
 			}
+			markup.setKeyboard(rows);
+			
+			s.setReplyMarkup(markup);
 		} else {
 			sb.append(question.questionText.text);
 		}
