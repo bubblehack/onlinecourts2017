@@ -27,7 +27,6 @@ public class ILTBot extends TelegramLongPollingBot {
 		try {
 			sendMessage(s);
 		} catch (TelegramApiException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
