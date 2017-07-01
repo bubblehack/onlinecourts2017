@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 public class Data {
 
-	public DocumentTemplate doc() {
+	public static DocumentTemplate doc() {
 		
 		Template employmentEmployed = new Template();
 		employmentEmployed.templateString = "is employed at $employer";
-		employmentEmployed.localReplacements.put("employer", Variable.simple("Where are you employed?"));
+		employmentEmployed.replacements.put("employer", Variable.simple("Where are you employed?", "claimant.employment"));
 
 		Template employmentSelfEmployed = new Template();
 		employmentEmployed.templateString = "is self employed";
@@ -17,20 +17,20 @@ public class Data {
 		employmentEmployed.templateString = "is unemployed";
 		
 		Clause employmentClause = new Clause();
-		employmentClause.globalQuestion = new Question("What is your employment status?");
+		employmentClause.globalQuestion = Variable.simple("What is your employment status?", "claimant.employment");
 		employmentClause.templates.put("self-employed", employmentSelfEmployed);
 		employmentClause.templates.put("unemployed", employmentUnemployed);
 		employmentClause.templates.put("employed", employmentEmployed);
 		
 		Template contractClaimantTemplate = new Template();
 		contractClaimantTemplate.templateString = "claimant: $name at $address @Employment";
-		contractClaimantTemplate.localReplacements.put("name", Variable.simple("What is your name?"));
-		contractClaimantTemplate.localReplacements.put("address", Variable.simple("What is your address?"));
-		contractClaimantTemplate.localReplacements.put("Employment", Variable.clause(employmentClause));
+		contractClaimantTemplate.replacements.put("name", Variable.simple("What is your name?", "claimant"));
+		contractClaimantTemplate.replacements.put("address", Variable.simple("What is your address?", "claimant"));
+		contractClaimantTemplate.replacements.put("Employment", Variable.clause(employmentClause, "claimant"));
 		
 		Clause claimant = new Clause();
 		claimant.globalQuestion = null;
-		claimant.templates.put("", new Template());
+		claimant.templates.put("", contractClaimantTemplate);
 		
 		return new DocumentTemplate(Arrays.asList(claimant));
 	}

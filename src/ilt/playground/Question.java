@@ -7,8 +7,4 @@ public class Question {
 		super();
 		this.text = text;
 	}
-
-	public Question canonical() {
-		return new Question(text);
-	}
 }
