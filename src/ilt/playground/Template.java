@@ -30,12 +30,7 @@ public class Template {
 				if (!answers.containsKey(v) && v.resolve(answers) == null) {
 					return null;
 				}
-				String match;
-				if (v.questionText != null) {
-					match = "\\$" + key;
-				} else {
-					match = "@" + key;
-				}
+				String match = "\\$" + key;
 				tmpResult = tmpResult.replaceAll(match, answers.get(v));
 			}
 			result = tmpResult;

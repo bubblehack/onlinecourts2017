@@ -70,7 +70,6 @@ public class Clause {
 		} else if (!templates.equals(other.templates))
 			return false;
 		return true;
-
 	}
 
 	public Clause create(String path) {
