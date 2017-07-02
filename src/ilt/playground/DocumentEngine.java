@@ -136,21 +136,58 @@ public class DocumentEngine {
 	public void print(String path) {
 		InputStream resourceAsStream = DocumentEngine.class.getResourceAsStream("/ilt/playground/sample.html");
 		Scanner s = new Scanner(resourceAsStream);
-		String template = s.useDelimiter("\\Z").next();
+		String html = s.useDelimiter("\\Z").next();
+		s.close();
+		
+		resourceAsStream = DocumentEngine.class.getResourceAsStream("/ilt/playground/header.html");
+		s = new Scanner(resourceAsStream);
+		String headerTemplate = s.useDelimiter("\\Z").next();
+		s.close();
+		
+
+		resourceAsStream = DocumentEngine.class.getResourceAsStream("/ilt/playground/clause.html");
+		s = new Scanner(resourceAsStream);
+		String clauseTemplate = s.useDelimiter("\\Z").next();
 		s.close();
 		
 		for (Variable v : answers.keySet()) {
 			System.err.println(v.scope + " " + v.questionText + " " + v.clause);
 		}
 		
-		template = template.replace("$court", "The High Court");
-		Variable claimantName = Variable.simple("What is your name?", "GLOBAL.Claimant.");
-		template = template.replace("$claimant", answers.get(claimantName));
+		html = html.replace("$court", "The High Court");
+		html = html.replace("$claimant", answers.get(Variable.simple("What is your name?", "GLOBAL.Claimant.")));
+		html = html.replace("$defendant", answers.get(Variable.simple("who do you want to bring a claim against?", "GLOBAL.Defendant.")));
+		html = html.replace("$claimNumber", "1111654");
+		
+		StringBuffer contents = new StringBuffer();
 
+		
+		int nextNumber = 1;
+		
+		
+		for (ItemHelp help : template.help) {
+			if (help.isSection)
+				contents.append(headerTemplate.replace("$headerText", help.itemName));
+			else {
+				
+				Clause cc = null;
+				for (Clause c : template.clauses) {
+					if (c.name.equals(help.itemName)) {
+						cc = c;
+						break;
+					}
+				}
+				contents.append(clauseTemplate.replace("$number", "" + nextNumber).replace("$clause", cc.resolve(answers)));
+				nextNumber++;
+			}
+		}
+		
+		html = html.replace("$contents", contents.toString());
+		
 		
 		try {
 			BufferedWriter writer = Files.newBufferedWriter(Paths.get(path));
-			writer.write(template);
+			writer.write(html);
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
