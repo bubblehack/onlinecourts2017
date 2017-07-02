@@ -14,6 +14,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import ilt.playground.Case;
 import ilt.playground.ClauseDictionary;
 import ilt.playground.DocumentEngine;
 import ilt.playground.DocumentTemplate;
@@ -21,7 +22,7 @@ import ilt.playground.MultiVariable;
 import ilt.playground.Variable;
 
 public class ILTBot extends TelegramLongPollingBot {
-	
+
 	DocumentEngine engine;
 
 	public ILTBot() {
@@ -50,14 +51,31 @@ public class ILTBot extends TelegramLongPollingBot {
 	}
 
 	Variable question = null;
-	
+
 	@Override
 	public void onUpdateReceived(Update update) {
 		String error = null;
 		String text = update.getMessage().getText();
 		if (question != null || text.startsWith("/")) {
+
+			if (text.startsWith("/")) {
+				if (text.startsWith("/list")) {
+					SendMessage s = new SendMessage();
+					s.setText("Saved cases:\n" + String.join("\n", Case.list()));
+					s.setChatId(update.getMessage().getChatId());
+					try {
+						sendMessage(s);
+					} catch (TelegramApiException e) {
+						e.printStackTrace();
+					}
+					return;
+				} else if (text.startsWith("/print")) {
+					engine.print("/Users/mcw/poc.html");
+				}
+			}
+
 			if (question instanceof MultiVariable) {
-				List<String> options = ((MultiVariable)question).options;
+				List<String> options = ((MultiVariable) question).options;
 				if (!options.contains(text)) {
 					error = "Sorry, you need to use one of the provided answers ";
 				} else {
@@ -67,32 +85,32 @@ public class ILTBot extends TelegramLongPollingBot {
 				engine.acceptAnswer(question, text);
 			}
 		}
-		
+
 		SendMessage s = new SendMessage();
 		question = engine.getNextQuestion();
+		if (question == null) {
+			return;
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		if (error != null) {
 			sb.append(error + "\n");
 		}
 		sb.append(engine.preamble);
 		if (question instanceof MultiVariable) {
-			
 			ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
-			markup.setSelective(true)
-			.setResizeKeyboard(true)
-			.setOneTimeKeyboard(true);
-			
-			
+			markup.setSelective(true).setResizeKeyboard(true).setOneTimeKeyboard(true);
+
 			sb.append(question.questionText.text);
 			sb.append("\n");
 			List<KeyboardRow> rows = new ArrayList<>();
-			for (String opt : ((MultiVariable)question).options) {
+			for (String opt : ((MultiVariable) question).options) {
 				KeyboardRow row = new KeyboardRow();
 				row.add(opt);
 				rows.add(row);
 			}
 			markup.setKeyboard(rows);
-			
+
 			s.setReplyMarkup(markup);
 		} else {
 			sb.append(question.questionText.text);
@@ -105,5 +123,5 @@ public class ILTBot extends TelegramLongPollingBot {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
