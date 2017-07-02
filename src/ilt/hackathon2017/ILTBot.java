@@ -94,7 +94,7 @@ public class ILTBot extends TelegramLongPollingBot {
 		if (error != null) {
 			sb.append(error + "\n");
 		}
-		sb.append(engine.preamble);
+		sb.append(engine.preamble == null ? "" : (engine.preamble + "\n"));
 		if (question instanceof MultiVariable) {
 			ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
 			markup.setSelective(true).setResizeKeyboard(true).setOneTimeKeyboard(true);

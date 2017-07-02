@@ -127,7 +127,7 @@ clause ParticularsOfLoss
     var amount `how much money were you promised?`
   end 
  
-  if `My reputation was damaged in the industry’ then ‘The Claimant suffered reputational damage and consequently a financial loss of $reputationalloss`
+  if `My reputation was damaged in the industry` then `The Claimant suffered reputational damage and consequently a financial loss of $reputationalloss`
     var reputationaloss `Please give me a figure for what you think the damage to your reputation cost you?`
   end 
  
