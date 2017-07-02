@@ -112,11 +112,24 @@ public class DocumentEngine {
 		preamble = "";
 		List<ItemHelp> helps = new ArrayList<>();
 		openQuestions = template.getOpenQuestions(answers, helps);
+		String section = null;
+		String clause = null;
 		for (ItemHelp help : helps) {
+			if (help.isSection) {
+				section = help.itemName;
+			} else {
+				clause = help.itemName;
+			}
 			if (!help.shown) {
 				preamble = preamble + help.helpText + "\n";
 				help.shown = true;
 			}
+		}
+		if (clause != null) {
+			preamble = "*Clause: " + clause + "*\n" + preamble;
+		}
+		if (section != null) {
+			preamble = "*Section: " + section + "*\n" + preamble;
 		}
 	}
 

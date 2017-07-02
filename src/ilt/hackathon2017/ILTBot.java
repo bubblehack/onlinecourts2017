@@ -116,6 +116,7 @@ public class ILTBot extends TelegramLongPollingBot {
 			sb.append(question.questionText.text);
 		}
 		s.setText(sb.toString());
+		s.setParseMode("Markdown");
 		s.setChatId(update.getMessage().getChatId());
 		try {
 			sendMessage(s);
