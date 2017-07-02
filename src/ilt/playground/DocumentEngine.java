@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.telegram.telegrambots.bots.DefaultAbsSender;
+
 import ilt.hackathon2017.ILTBot;
 
 public class DocumentEngine {
@@ -150,8 +152,13 @@ public class DocumentEngine {
 		String clauseTemplate = s.useDelimiter("\\Z").next();
 		s.close();
 		
+		System.err.print("ANSWERS");
 		for (Variable v : answers.keySet()) {
-			System.err.println(v.scope + " " + v.questionText + " " + v.clause);
+			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
+		}
+		System.err.print("DEFENSE");
+		for (Variable v : defenseAnswers.keySet()) {
+			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
 		}
 		
 		html = html.replace("$court", "The High Court");
