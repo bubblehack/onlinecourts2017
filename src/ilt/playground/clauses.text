@@ -23,7 +23,7 @@ document
   clause RequestPayment
     `This clause asks about how you requested payment.`
     `This is how/when the client requested payment.`
-  heading `Defendant’s failure to pay
+  heading `Defendant’s failure to pay`
     `This section will describe how the person you are claiming against failed to pay.`
     `This section describes how the Claimant believes that you failed to pay.`
   clause DefendantBreach
@@ -40,26 +40,16 @@ document
     `This is what the Claimant says they have lost.`
 end
 
-clause Employment
-    question `What is your employment status?`
-
-    if `I am self employed` then `The claimant is self-employed` end
-    if `I am unemployed` then `The claimant is unemployed` end
-    
-    if `I am employed` then `The claimant is employed at $employer`
-		var employer `Where are you employed?`
-	end
-end
-
 clause ClaimantEmployment 
   question `What is your employment status?`
  
-  if `I am self-employed` then `The Claimant is self-employed` 
+  if `I am self-employed` then `The Claimant is self-employed as $occupation.`
+    var occupation `What is your occupation?` 
   end 
   if `I am unemployed` then `The Claimant is unemployed` 
   end 
   if `I am employed` then `The Claimant is employed at $employer`
-    var employer `where are you employed?`
+    var employer `Where are you employed?`
   end 
 end
  
@@ -74,12 +64,13 @@ end
 clause DefendantEmployment 
   question `What is their employment status?`
  
-  if `They are self-employed` then `The Defendant is self-employed` 
+  if `They are self-employed` then `The Defendant is self-employed as $occupation.`
+    var occupation `What is their occupation?` 
   end 
   if `They are unemployed` then `The Defendant is unemployed` 
   end 
   if `They are employed` then `The Defendant is employed at $employer`
-    var employer `where are they employed?`
+    var employer `Where are they employed?`
   end 
 end 
  

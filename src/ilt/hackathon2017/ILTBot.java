@@ -71,7 +71,7 @@ public class ILTBot extends TelegramLongPollingBot {
 					}
 					return;
 				} else if (text.startsWith("/print")) {
-					engine.print("/Users/mcw/poc.html");
+					engine.print("/Users/rsta/poc.html");
 				} else if (text.startsWith("/skip")) {
 					skipAll();
 				}
