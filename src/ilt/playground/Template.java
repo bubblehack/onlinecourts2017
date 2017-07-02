@@ -1,7 +1,7 @@
 package ilt.playground;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,7 +10,7 @@ public class Template {
 
 	public String templateString;
 	public String result = null;
-	public Map<String, Variable> replacements = new HashMap<>();
+	public Map<String, Variable> replacements = new LinkedHashMap<>();
 	
 	public List<Variable> getOpenQuestions(Map<Variable, String> answers) {
 		List<Variable> result = new ArrayList<>();
