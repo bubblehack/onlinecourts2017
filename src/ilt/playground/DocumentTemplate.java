@@ -40,11 +40,11 @@ public class DocumentTemplate {
 		return result;
 	}
 
-	public String resolve(Map<Variable, String> answers) {
+	public String resolve(Map<Variable, String> answers, boolean markup) {
 		StringBuilder result = new StringBuilder();
 		int index = 0;
 		for (Clause c : clauses) {
-			String next = c.resolve(answers);
+			String next = c.resolve(answers, 0, markup);
 			if (next == null) {
 				return null;
 			}
@@ -53,11 +53,11 @@ public class DocumentTemplate {
 		return result.toString();
 	}
 	
-	public List<String> resolveClauses(Map<Variable, String> answers) {
+	public List<String> resolveClauses(Map<Variable, String> answers, boolean markup) {
 		List<String> result = new ArrayList<>();
 		int index = 0;
 		for (Clause c : clauses) {
-			result.add(++index + ". " + c.resolve(answers));
+			result.add(++index + ". " + c.resolve(answers, 0, markup));
 		}
 		return result;
 	}

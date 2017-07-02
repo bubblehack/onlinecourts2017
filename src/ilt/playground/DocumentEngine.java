@@ -135,7 +135,7 @@ public class DocumentEngine {
 			Map<Variable, String> map = defense ? defenseAnswers : answers;
 			map.put(question.canonical(), answer);
 		}
-		result = template.resolve(answers);
+		result = template.resolve(answers, false);
 	}
 	
 	public void refresh() {
@@ -215,19 +215,38 @@ public class DocumentEngine {
 				}
 				
 				
-				String clauseText = clauseTemplate.replace("$number", "" + nextNumber).replace("$clause", clause.resolve(answers));
+				String clauseText = clauseTemplate.replace("$number", "" + nextNumber).replace("$clause", clause.resolve(answers, nextNumber, true));
 
 				String clauseClass = "not-admitted";
 				
 				if (clause.dispute != null) {
-					String clauseResolution = clause.dispute.resolve(defenseAnswers);
+					String clauseResolution = clause.dispute.resolve(defenseAnswers, 0, false);
+					
+
 
 					if (clauseResolution != null) {
 						System.err.println("Clause resolution: " + clauseResolution);
-						clauseText = clauseText.replace("$disputeStatus", clauseResolution);
+						if (clauseResolution.equals("Partial")) {
+							StringBuffer list = new StringBuffer();
+							list.append("<ul>");
+							for (Clause subClause : clause.subDisagreements) {
+								String resolution = subClause.resolve(defenseAnswers, 0, false);
+								list.append("<li onmouseout=\"hilite('fact-" + nextNumber + "-" + subClause.reference + "');\" onmouseover=\"hilite('fact-" + nextNumber + "-" + subClause.reference + "');\">").append(resolution).append("</li>");
+								
+								
+								
+								
+							}
+							list.append("</ul>");
+							clauseText = clauseText.replace("$disputeStatus", list.toString());
+							
+						} else {
+							clauseText = clauseText.replace("$disputeStatus", clauseResolution);
+						}
 						if (clauseResolution.equals("Admitted")) {
 							clauseClass = "admitted";
 						} else {
+
 							clauseClass = "denied";
 						}
 					} else {

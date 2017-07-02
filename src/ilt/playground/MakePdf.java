@@ -53,7 +53,7 @@ public class MakePdf {
 				nextLine();
 				writeOffset("------------------------------------", 220);
 				nextLine();
-				List<String> clauses = template.resolveClauses(answers);
+				List<String> clauses = template.resolveClauses(answers, false);
 				for (String s : clauses) {
 					writeWrapped(s);
 				}

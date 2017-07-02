@@ -18,9 +18,11 @@ public class Clause {
 	Map<String, Template> templates = new HashMap<>(); // key is "" if globalQuestion is null.
 
 	
-	private List<Clause> subDisagreements;
+	public List<Clause> subDisagreements;
 
 	private Template originalTemplate;
+
+	public String reference;
 	
 	private Clause makeDisputeClause(String scope, Template template, Variable variable, Map<Variable, String> originalAnswers) {
 		Clause c = new Clause();
@@ -38,7 +40,7 @@ public class Clause {
 		String originalAnswer;
 		
 		if (template != null)
-			originalAnswer = template.resolve(originalAnswers);
+			originalAnswer = template.resolve(originalAnswers, 0, false);
 		else
 			originalAnswer = originalAnswers.get(variable);
 
@@ -73,6 +75,7 @@ public class Clause {
 				subDisagreements = new ArrayList<>();
 				
 				for (Entry<String, Variable> subVariable : originalTemplate.replacements.entrySet()) {
+					Clause subClause;
 					if (subVariable.getValue().clause != null) {
 						
 						String template = "";
@@ -80,10 +83,13 @@ public class Clause {
 							template = originalAnswers.get(subVariable.getValue().clause.globalQuestion);
 						Template originalSubTemplate = subVariable.getValue().clause.templates.get(template);
 						
-						subDisagreements.add(makeDisputeClause(name, originalSubTemplate, null, originalAnswers));
+						subClause = makeDisputeClause(name, originalSubTemplate, null, originalAnswers);
 					} else {
-						subDisagreements.add(makeDisputeClause(name, null, subVariable.getValue(), originalAnswers));
+						subClause = makeDisputeClause(name, null, subVariable.getValue(), originalAnswers);
 					}
+
+					subClause.reference = subVariable.getKey();
+					subDisagreements.add(subClause);
 					
 				}
 				
@@ -116,7 +122,7 @@ public class Clause {
 		return templates.get(key).getOpenQuestions(answers);
 	}
 
-	public String resolve(Map<Variable, String> answers) {
+	public String resolve(Map<Variable, String> answers, int id, boolean markup) {
 		String key = "";
 		if (answers.containsKey(globalQuestion)) {
 			key = answers.get(globalQuestion);
@@ -124,7 +130,7 @@ public class Clause {
 		if (!templates.containsKey(key)) {
 			return null;
 		}
-		return templates.get(key).resolve(answers);
+		return templates.get(key).resolve(answers, id,markup);
 	}
 
 	@Override

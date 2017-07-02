@@ -22,19 +22,22 @@ public class Template {
 		return result;
 	}
 
-	public String resolve(Map<Variable, String> answers) {
-		if (result == null) {
+	public String resolve(Map<Variable, String> answers, int id, boolean markup) {
+//		if (result == null) {
 			String tmpResult = templateString;
 			for (String key : replacements.keySet()) {
 				Variable v = replacements.get(key);
-				if (!answers.containsKey(v) && v.resolve(answers) == null) {
+				if (!answers.containsKey(v) && v.resolve(answers, id, markup) == null) {
 					return null;
 				}
 				String match = "\\$" + key;
-				tmpResult = tmpResult.replaceAll(match, answers.get(v));
+				if (markup) 
+					tmpResult = tmpResult.replaceAll(match, "<span class=\"fact\" id=\"fact-" + id + "-" + key + "\">" + answers.get(v) + "</span>");
+				else
+					tmpResult = tmpResult.replaceAll(match, answers.get(v));
 			}
 			result = tmpResult;
-		}
+//		}
 		return result;
 	}
 

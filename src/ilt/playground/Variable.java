@@ -43,9 +43,9 @@ public class Variable {
 		}
 	}
 
-	public String resolve(Map<Variable, String> answers) {
+	public String resolve(Map<Variable, String> answers, int id,boolean markup) {
 		if (clause != null) {
-			String result = clause.resolve(answers);
+			String result = clause.resolve(answers, id, markup);
 			if (result != null) {
 				answers.put(this, result);
 			}

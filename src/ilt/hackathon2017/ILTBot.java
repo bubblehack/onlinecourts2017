@@ -23,7 +23,7 @@ public class ILTBot extends TelegramLongPollingBot {
 
 	DocumentEngine engine;
 
-	public ILTBot() {
+	public ILTBot() {	
 		engine = new DocumentEngine();
 		ClauseDictionary dict = new ClauseDictionary();
 		try {
@@ -40,14 +40,14 @@ public class ILTBot extends TelegramLongPollingBot {
 
 	@Override
 	public String getBotUsername() {
-		//return "DigitalLegalAssitantBot";
-		return "DigitalLegalAssitantBot2";
+		return "DigitalLegalAssitantBot";
+//		return "DigitalLegalAssitantBot2";
 	}
 
 	@Override
 	public String getBotToken() {
-		return "417433914:AAGoXm0gxCwYl6YHhcOFkrxbKtQcVGtkZ5Q";
-		//return "448560174:AAGQB_MdSfaIPFG67QTuE0kSArvJd_ybkL8";
+//		return "417433914:AAGoXm0gxCwYl6YHhcOFkrxbKtQcVGtkZ5Q";
+		return "448560174:AAGQB_MdSfaIPFG67QTuE0kSArvJd_ybkL8";
 	}
 
 	Variable question = null;
