@@ -134,6 +134,9 @@ public class DocumentEngine {
 		if (section != null) {
 			preamble = "*Section: " + section + "*\n" + preamble;
 		}
+		if (defense) {
+			preamble = "";
+		}
 	}
 
 	public void print(String path) {
