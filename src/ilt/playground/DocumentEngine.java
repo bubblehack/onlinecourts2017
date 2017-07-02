@@ -7,12 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import com.sun.research.ws.wadl.Doc;
 
 import ilt.hackathon2017.ILTBot;
 
@@ -46,7 +45,7 @@ public class DocumentEngine {
 		
 		dict.update(ILTBot.class.getResourceAsStream("/ilt/playground/clauses.text"));
 		
-		template = new DocumentTemplate(dict.generateList());
+		template = new DocumentTemplate(dict.generateList(), dict.generateHelp());
 		answers = new HashMap<>();
 		defenseAnswers = new HashMap<>();
 		locked = false;
