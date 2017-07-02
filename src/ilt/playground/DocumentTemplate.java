@@ -12,10 +12,6 @@ public class DocumentTemplate {
 		this.clauses = clauses;
 	}
 	
-	public String render() {
-		return "";
-	}
-	
 	public List<Variable> getOpenQuestions(Map<Variable, String> answers) {
 		List<Variable> result = new ArrayList<>();
 		for (Clause c : clauses) {
@@ -38,6 +34,15 @@ public class DocumentTemplate {
 			result.append(++index + ". " + next + "\n\n");
 		}
 		return result.toString();
+	}
+	
+	public List<String> resolveClauses(Map<Variable, String> answers) {
+		List<String> result = new ArrayList<>();
+		int index = 0;
+		for (Clause c : clauses) {
+			result.add(++index + ". " + c.resolve(answers));
+		}
+		return result;
 	}
 	
 }

@@ -17,11 +17,11 @@ public class DocumentEngine {
 		if (result != null) {
 			Variable v = new Variable();
 			v.questionText = new Question(result);
+			MakePdf.go(template, answers);
 			return v;
 		}
 		refresh();
 		return openQuestions.get(0);
-		
 	}
 	
 	public void acceptAnswer(Variable question, String answer) {
