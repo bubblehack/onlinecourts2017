@@ -128,7 +128,7 @@ clause ParticularsOfLoss
   end 
  
   if `My reputation was damaged in the industry` then `The Claimant suffered reputational damage and consequently a financial loss of $reputationalloss`
-    var reputationaloss `Please give me a figure for what you think the damage to your reputation cost you?`
+    var reputationalloss `Please give me a figure for what you think the damage to your reputation cost you?`
   end 
  
 end 
