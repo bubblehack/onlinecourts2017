@@ -74,6 +74,7 @@ public class Clause {
 
 	public Clause create(String path) {
 		Clause c = new Clause();
+		c.name = name;
 		
 		if (globalQuestion != null) {
 			c.globalQuestion = globalQuestion.create(path + "." + name);

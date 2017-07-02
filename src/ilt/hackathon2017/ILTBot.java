@@ -36,7 +36,7 @@ public class ILTBot extends TelegramLongPollingBot {
 		
 		dict.update(ILTBot.class.getResourceAsStream("/ilt/playground/clauses.text"));
 		
-		engine.template = new DocumentTemplate(dict.generateList());
+		engine.template = new DocumentTemplate(dict.generateList(), dict.generateHelp());
 	}
 
 	@Override
@@ -74,9 +74,9 @@ public class ILTBot extends TelegramLongPollingBot {
 		if (error != null) {
 			sb.append(error + "\n");
 		}
+		sb.append(engine.preamble);
 		if (question instanceof MultiVariable) {
 			
-
 			ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
 			markup.setSelective(true)
 			.setResizeKeyboard(true)

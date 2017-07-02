@@ -10,6 +10,7 @@ public class ClauseDictionary {
 	
 	private Map<String, Clause> clauses = new HashMap<>();
 	private List<String> rootClauses = new ArrayList<>();
+	private List<ItemHelp> wholeLayout = new ArrayList<>();
 	
 	
 	public void update(InputStream in) {
@@ -20,6 +21,7 @@ public class ClauseDictionary {
 				rootClauses.add(s);
 			}
 		}
+		wholeLayout = parser.wholeLayout;
 		System.err.println(rootClauses);
 	}
 	
@@ -31,6 +33,10 @@ public class ClauseDictionary {
 		}
 		
 		return roots;
+	}
+	
+	public List<ItemHelp> generateHelp() {
+		return wholeLayout;
 	}
 	
 

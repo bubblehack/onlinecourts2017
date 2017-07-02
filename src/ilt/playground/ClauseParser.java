@@ -25,6 +25,7 @@ public class ClauseParser {
 
 	public Map<String, Clause> map = new HashMap<>();
 	public List<String> rootClauses = new ArrayList<>();
+	public List<ItemHelp> wholeLayout = new ArrayList<>();
 
 	public ClauseParser(InputStream stream) {
 		s = new Scanner(stream);
@@ -75,7 +76,14 @@ public class ClauseParser {
 				System.err.println("command: " + command);
 				switch (command) {
 				case "clause":
-					rootClauses.add(s.next());
+					String clauseName = s.next();
+					rootClauses.add(clauseName);
+					wholeLayout.add(new ItemHelp(clauseName, parseString()));
+					break;
+				case "heading":
+					ItemHelp section = new ItemHelp(parseString(), parseString());
+					section.isSection = true;
+					wholeLayout.add(section);
 					break;
 				}
 			}
@@ -125,48 +133,40 @@ public class ClauseParser {
 			JOptionPane.showMessageDialog(null, "No var/sub for $" + unfound + " in template: " + t.templateString);
 		}
 
-
 		return t;
 
 	}
 
 	/*
-	public static void main(String[] args) {
-
-		final JDialog frame = new JDialog();
-		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		frame.setModal(true);
-		frame.setSize(500, 500);
-		frame.setLocationRelativeTo(null);
-
-		final JFileChooser chooser = new JFileChooser();
-
-		JButton loadFile = new JButton(new AbstractAction("Load") {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-					System.err.println(chooser.getSelectedFile());
-
-					try {
-						FileInputStream in = new FileInputStream(chooser.getSelectedFile());
-
-						parseClauses(in);
-						in.close();
-
-					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(frame, "Error loading file: " + ex.getMessage());
-					}
-				}
-			}
-		});
-
-		frame.getContentPane().add(loadFile);
-
-		frame.setVisible(true);
-
-	}
-	*/
+	 * public static void main(String[] args) {
+	 * 
+	 * final JDialog frame = new JDialog();
+	 * frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	 * frame.setModal(true); frame.setSize(500, 500);
+	 * frame.setLocationRelativeTo(null);
+	 * 
+	 * final JFileChooser chooser = new JFileChooser();
+	 * 
+	 * JButton loadFile = new JButton(new AbstractAction("Load") {
+	 * 
+	 * @Override public void actionPerformed(ActionEvent e) { if
+	 * (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+	 * System.err.println(chooser.getSelectedFile());
+	 * 
+	 * try { FileInputStream in = new
+	 * FileInputStream(chooser.getSelectedFile());
+	 * 
+	 * parseClauses(in); in.close();
+	 * 
+	 * } catch (IOException ex) { JOptionPane.showMessageDialog(frame,
+	 * "Error loading file: " + ex.getMessage()); } } } });
+	 * 
+	 * frame.getContentPane().add(loadFile);
+	 * 
+	 * frame.setVisible(true);
+	 * 
+	 * }
+	 */
 
 	public static ClauseParser parseClauses(InputStream in) {
 		ClauseParser parser = new ClauseParser(in);

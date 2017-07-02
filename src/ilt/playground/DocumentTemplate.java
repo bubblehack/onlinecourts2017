@@ -7,16 +7,33 @@ import java.util.Map;
 public class DocumentTemplate {
 
 	List<Clause> clauses;
+	List<ItemHelp> help;
 	
-	public DocumentTemplate(List<Clause> clauses) {
+	public DocumentTemplate(List<Clause> clauses, List<ItemHelp> help) {
 		this.clauses = clauses;
+		this.help = help;
 	}
 	
-	public List<Variable> getOpenQuestions(Map<Variable, String> answers) {
+	public List<Variable> getOpenQuestions(Map<Variable, String> answers, List<ItemHelp> helps) {
 		List<Variable> result = new ArrayList<>();
+		ItemHelp section = null;
+		ItemHelp clause = null;
 		for (Clause c : clauses) {
+			if (c.name != null) {
+				for (ItemHelp i : help) {
+					if (i.isSection) {
+						section = i;
+					}
+					if (i.itemName.equals(c.name)) {
+						clause = i;
+						break;
+					}
+				}
+			}
 			result.addAll(c.getOpenQuestions(answers));
 			if (!result.isEmpty()) {
+				if (section != null) helps.add(section);
+				if (clause != null) helps.add(clause);
 				break;
 			}
 		}

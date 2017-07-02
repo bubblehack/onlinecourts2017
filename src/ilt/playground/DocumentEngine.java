@@ -12,6 +12,7 @@ public class DocumentEngine {
 	
 	List<Variable> openQuestions;
 	String result = null;
+	public String preamble = "";
 	
 	public Variable getNextQuestion() {
 		if (result != null) {
@@ -36,7 +37,15 @@ public class DocumentEngine {
 	}
 	
 	public void refresh() {
-		openQuestions = template.getOpenQuestions(answers);
+		preamble = "";
+		List<ItemHelp> helps = new ArrayList<>();
+		openQuestions = template.getOpenQuestions(answers, helps);
+		for (ItemHelp help : helps) {
+			if (!help.shown) {
+				preamble = preamble + help.helpText + "\n";
+				help.shown = true;
+			}
+		}
 	}
 	
 }

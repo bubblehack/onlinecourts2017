@@ -1,13 +1,17 @@
 document
-  clause Claimant
-  clause Defendant
-  clause Contract
-  clause ClaimantPerformance
-  clause RequestPayment
-  clause ParticularsOfLoss
-  clause DefendantBreach
-  clause PaymentDue
-  clause ParticularsOfLoss
+  heading `Parties` `This section describes the people involved in the claim.`
+  clause Claimant `First, we need some information about you (the person making the claim).`
+  clause Defendant `Next, we need to know about the person you are claiming against.`
+  heading `The Contract` `This section describes the contract or agreement involved in this dispute.`
+  clause Contract `This clause establishes the purpose and content of the contract.`
+  heading `The Claimant’s Performance of the Contract` `This section establishes what you (the person making the claim) did as part of the agreement.`
+  clause ClaimantPerformance `This clause asks about what you did.`
+  clause RequestPayment `This clause asks about how you requested payment`
+  heading `Defendant’s failure to pay` `This section will describe how the person you are claiming against failed to pay.`
+  clause DefendantBreach `This clause describes how the defendant breached your agreement.`
+  clause PaymentDue `This clause describes when the payment was due`
+  heading `Particulars of Loss` `This section describes what the claim has cost you.`
+  clause ParticularsOfLoss `This clause will identify the financial cost of the claim to you.`
 end
 
 clause Employment
@@ -35,29 +39,29 @@ end
  
 clause Claimant 
   template `The Claimant is $name of $address. $employment`
-    sub employment ClaimantEmployment
     var name `What is your name?`
     var address `What is your address?`
+    sub employment ClaimantEmployment
   end
 end
 
 clause DefendantEmployment 
   question `What is their employment status?`
  
-  if `I am self-employed` then `The Defendant is self-employed` 
+  if `They are self-employed` then `The Defendant is self-employed` 
   end 
-  if `I am unemployed` then `The Defendant is unemployed` 
+  if `They are unemployed` then `The Defendant is unemployed` 
   end 
-  if `I am employed` then `The Defendant is employed at $employer`
-    var employer `where are you employed?`
+  if `They are employed` then `The Defendant is employed at $employer`
+    var employer `where are they employed?`
   end 
 end 
  
 clause Defendant
-  template `The Defendant is $D_name of $D_address. $D_occupation.`
-	var D_name `who do you want to bring a claim against?`
-	var D_address `What’s their address?`
-	sub D_occupation DefendantEmployment
+  template `The Defendant is $dname of $daddress. $doccupation.`
+	var dname `who do you want to bring a claim against?`
+	var daddress `What’s their address?`
+	sub doccupation DefendantEmployment
   end
 end
  
