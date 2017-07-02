@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 document
   clause Claimant
   clause Defendant
@@ -9,11 +8,6 @@ document
   clause DefendantBreach
   clause PaymentDue
   clause ParticularsOfLoss
-=======
-
-document
-  clause Employment
-  clause ContractClaimant
 end
 
 clause Employment
@@ -25,7 +19,6 @@ clause Employment
     if `I am employed` then `The claimant is employed at $employer`
 		var employer `Where are you employed?`
 	end
->>>>>>> Stashed changes
 end
 
 clause ClaimantEmployment 
