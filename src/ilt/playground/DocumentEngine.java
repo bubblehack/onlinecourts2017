@@ -78,6 +78,7 @@ public class DocumentEngine {
 		if (result != null) {
 			Variable v = new Variable();
 			v.questionText = new Question(result);
+			v.finalMessage = true;
 			return v;
 		} else if (locked) {
 			return null;

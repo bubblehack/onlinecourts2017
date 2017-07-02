@@ -8,6 +8,7 @@ public class Variable {
 	public Clause clause;
 	public Question questionText;
 	public String scope;
+	public boolean finalMessage = false;
 	
 	public static Variable simple(String questionText, String scope) {
 		Variable v = new Variable();

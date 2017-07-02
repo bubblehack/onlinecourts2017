@@ -49,6 +49,7 @@ public class ILTBot extends TelegramLongPollingBot {
 	}
 
 	Variable question = null;
+	boolean skipMode = false;
 
 	@Override
 	public void onUpdateReceived(Update update) {
@@ -69,6 +70,8 @@ public class ILTBot extends TelegramLongPollingBot {
 					return;
 				} else if (text.startsWith("/print")) {
 					engine.print("/Users/mcw/poc.html");
+				} else if (text.startsWith("/skip")) {
+					skipAll();
 				}
 			}
 
@@ -120,6 +123,21 @@ public class ILTBot extends TelegramLongPollingBot {
 			sendMessage(s);
 		} catch (TelegramApiException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	int idx = 0;
+	
+	void skipAll() {
+		while (true) {
+			Variable v = engine.getNextQuestion();
+			if (v == null || v.finalMessage)
+				break;;
+			if (v instanceof MultiVariable) {
+				engine.acceptAnswer(v, ((MultiVariable) v).options.get(0));
+			} else {
+				engine.acceptAnswer(v.canonical(), "generic answer " + idx++);
+			}
 		}
 	}
 
