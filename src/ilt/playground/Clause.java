@@ -13,7 +13,7 @@ public class Clause {
 
 	String name;
 
-	private Clause dispute;
+	public Clause dispute;
 
 	Map<String, Template> templates = new HashMap<>(); // key is "" if globalQuestion is null.
 

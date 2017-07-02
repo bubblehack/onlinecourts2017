@@ -3,7 +3,7 @@
 
 <head>
     <style>
-        td {
+        .heading {
             text-align: center;
         }
 
@@ -11,13 +11,28 @@
             display: block;
             height: 25px;
         }
+        
+        .admitted {
+        		color: green;
+        	}
+        	.denied {
+        		color: darkred;
+        	}
+        	.not-admitted {
+        	color: gray;
+        	}
+        	
+        	.clause-id {
+        	padding-right: 20px;
+        		margin-right: 20px;
+        	}
     </style>
 </head>
 
 <body>
 
     <div>
-        <table width="100%">
+        <table width="100%" class="heading">
             <tr>
                 <td>In the $court</td>
                 <td></td>
@@ -52,23 +67,25 @@
             <tr>
                 <td></td>
                 <td>-----------------------------------</td>
-                <td></td>
+                <td>-----------------</td>
             </tr>
             <tr>
                 <td></td>
                 <td> PARTICULARS OF CLAIM </td>
-                <td></td>
+                <td> DEFENCE </td>
             </tr>
             <tr>
                 <td></td>
                 <td>-----------------------------------</td>
-                <td></td>
+                <td>-----------------</td>
             </tr>
         </table>
     </div>
 
     <div>
+    <table width="100%">
         $contents
+    </table>
     </div>
 
 

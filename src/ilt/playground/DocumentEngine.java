@@ -180,14 +180,14 @@ public class DocumentEngine {
 		String clauseTemplate = s.useDelimiter("\\Z").next();
 		s.close();
 		
-		System.err.print("ANSWERS");
-		for (Variable v : answers.keySet()) {
-			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
-		}
-		System.err.print("DEFENSE");
-		for (Variable v : defenseAnswers.keySet()) {
-			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
-		}
+//		System.err.print("ANSWERS");
+//		for (Variable v : answers.keySet()) {
+//			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
+//		}
+//		System.err.print("DEFENSE");
+//		for (Variable v : defenseAnswers.keySet()) {
+//			System.err.println(v.scope + " " + (v.questionText != null ? v.questionText.text : "") + " " + v.clause);
+//		}
 		
 		html = html.replace("$court", "The High Court");
 		html = html.replace("$claimant", answers.get(Variable.simple("What is your name?", "GLOBAL.Claimant.")));
@@ -195,6 +195,7 @@ public class DocumentEngine {
 		html = html.replace("$claimNumber", "1111654");
 		
 		StringBuffer contents = new StringBuffer();
+		
 
 		
 		int nextNumber = 1;
@@ -205,14 +206,39 @@ public class DocumentEngine {
 				contents.append(headerTemplate.replace("$headerText", help.itemName));
 			else {
 				
-				Clause cc = null;
+				Clause clause = null;
 				for (Clause c : template.clauses) {
 					if (c.name.equals(help.itemName)) {
-						cc = c;
+						clause = c;
 						break;
 					}
 				}
-				contents.append(clauseTemplate.replace("$number", "" + nextNumber).replace("$clause", cc.resolve(answers)));
+				
+				
+				String clauseText = clauseTemplate.replace("$number", "" + nextNumber).replace("$clause", clause.resolve(answers));
+
+				String clauseClass = "not-admitted";
+				
+				if (clause.dispute != null) {
+					String clauseResolution = clause.dispute.resolve(defenseAnswers);
+
+					if (clauseResolution != null) {
+						System.err.println("Clause resolution: " + clauseResolution);
+						clauseText = clauseText.replace("$disputeStatus", clauseResolution);
+						if (clauseResolution.equals("Admitted")) {
+							clauseClass = "admitted";
+						} else {
+							clauseClass = "denied";
+						}
+					} else {
+						clauseText = clauseText.replace("$disputeStatus", "todo");
+					}
+				} else {
+					clauseText = clauseText.replace("$disputeStatus", "todo");
+				}
+				
+				clauseText = clauseText.replace("$disputeClass", clauseClass);
+				contents.append(clauseText);
 				nextNumber++;
 			}
 		}
