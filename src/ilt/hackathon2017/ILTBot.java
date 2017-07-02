@@ -40,12 +40,14 @@ public class ILTBot extends TelegramLongPollingBot {
 
 	@Override
 	public String getBotUsername() {
-		return "DigitalLegalAssitantBot";
+		//return "DigitalLegalAssitantBot";
+		return "DigitalLegalAssitantBot2";
 	}
 
 	@Override
 	public String getBotToken() {
-		return "448560174:AAGQB_MdSfaIPFG67QTuE0kSArvJd_ybkL8";
+		return "417433914:AAGoXm0gxCwYl6YHhcOFkrxbKtQcVGtkZ5Q";
+		//return "448560174:AAGQB_MdSfaIPFG67QTuE0kSArvJd_ybkL8";
 	}
 
 	Variable question = null;
@@ -97,7 +99,7 @@ public class ILTBot extends TelegramLongPollingBot {
 		if (error != null) {
 			sb.append(error + "\n");
 		}
-		sb.append(engine.preamble == null ? "" : (engine.preamble + "\n"));
+		sb.append(question.finalMessage || engine.preamble == null ? "" : (engine.preamble + "\n"));
 		if (question instanceof MultiVariable) {
 			ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
 			markup.setSelective(true).setResizeKeyboard(true).setOneTimeKeyboard(true);

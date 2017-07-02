@@ -71,10 +71,10 @@ public class ClauseParser {
 				case "clause":
 					String clauseName = s.next();
 					rootClauses.add(clauseName);
-					wholeLayout.add(new ItemHelp(clauseName, parseString()));
+					wholeLayout.add(new ItemHelp(clauseName, parseString(), parseString()));
 					break;
 				case "heading":
-					ItemHelp section = new ItemHelp(parseString(), parseString());
+					ItemHelp section = new ItemHelp(parseString(), parseString(), parseString());
 					section.isSection = true;
 					wholeLayout.add(section);
 					break;

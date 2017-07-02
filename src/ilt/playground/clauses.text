@@ -1,17 +1,43 @@
 document
-  heading `Parties` `This section describes the people involved in the claim.`
-  clause Claimant `First, we need some information about you (the person making the claim).`
-  clause Defendant `Next, we need to know about the person you are claiming against.`
-  heading `The Contract` `This section describes the contract or agreement involved in this dispute.`
-  clause Contract `This clause establishes the purpose and content of the contract.`
-  heading `The Claimant’s Performance of the Contract` `This section establishes what you (the person making the claim) did as part of the agreement.`
-  clause ClaimantPerformance `This clause asks about what you did.`
-  clause RequestPayment `This clause asks about how you requested payment`
-  heading `Defendant’s failure to pay` `This section will describe how the person you are claiming against failed to pay.`
-  clause DefendantBreach `This clause describes how the defendant breached your agreement.`
-  clause PaymentDue `This clause describes when the payment was due`
-  heading `Particulars of Loss` `This section describes what the claim has cost you.`
-  clause ParticularsOfLoss `This clause will identify the financial cost of the claim to you.`
+  heading `Parties`
+    `This section describes the people involved in the claim.`
+    `This section describes the people involved in the claim.`
+  clause Claimant
+    `First, we need some information about you (the person making the claim).`
+    `These are the personal details reported by the Claimant about themselves.`
+  clause Defendant
+    `Next, we need to know about the person you are claiming against.`
+    `These are the personal details reported by the Claimant about you.`
+  heading `The Contract`
+    `This section describes the contract or agreement involved in this dispute.`
+    `This section describes the contract or agreement involved in this dispute.`
+  clause Contract
+    `This clause establishes the purpose and content of the contract.`
+    `This is how the Claimant has described the agreement between you.`
+  heading `The Claimant’s Performance of the Contract`
+    `This section establishes what you (the person making the claim) did as part of the agreement.`
+    `This section describes what the claimant did as part of the agreement.`
+  clause ClaimantPerformance
+    `This clause asks about what you did.`
+    `This is what the Claimant says they did towards meeting the terms of the contract.`
+  clause RequestPayment
+    `This clause asks about how you requested payment.`
+    `This is how/when the client requested payment.`
+  heading `Defendant’s failure to pay
+    `This section will describe how the person you are claiming against failed to pay.`
+    `This section describes how the Claimant believes that you failed to pay.`
+  clause DefendantBreach
+    `This clause describes how the defendant breached your agreement.`
+    `This is how the Claimant says you breached the agreement.`
+  clause PaymentDue
+    `This clause describes when the payment was due`
+    `This clause describes when the payment was due`
+  heading `Particulars of Loss`
+    `This section describes what the claim has cost you.`
+    `This section describes what the claim has cost the Claimant.`
+  clause ParticularsOfLoss
+    `This clause will identify the financial cost of the claim to you.`
+    `This is what the Claimant says they have lost.`
 end
 
 clause Employment

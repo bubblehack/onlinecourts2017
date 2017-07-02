@@ -63,11 +63,38 @@ public class DocumentEngine {
 	public Variable getNextQuestion() {
 		if (defense) {
 			Variable next = null;
-			
+			preamble = "";
+			ItemHelp section = null;
+			ItemHelp clause = null;
 			for (Clause c : template.clauses) {
+				for (ItemHelp help : template.help) {
+					if (help.isSection) {
+						section = help;
+					}
+					if (help.itemName.equals(c.name)) {
+						clause = help;
+						break;
+					}
+				}
 				next = c.getNextDefenseQuestion(defenseAnswers, answers);
-				if (next != null)
+				if (next != null) {
+					if (section != null) {
+						preamble = "*Section: " + section.itemName + "*\n";
+					}
+					if (clause != null) {
+						preamble = preamble + "*Clause: " + clause.itemName + "*\n";
+					}
+					if (section != null && !section.defenceShown) {
+						preamble = preamble + section.defenceHelp + "\n";
+						section.defenceShown = true;
+					}
+					if (clause != null && !clause.defenceShown) {
+						preamble = preamble + clause.defenceHelp + "\n";
+						clause.defenceShown = true;
+					}
+					preamble = preamble + "\n";
 					return next;
+				}
 			}
 			
 			return Variable.simple("Defense complete!", "");
@@ -133,9 +160,6 @@ public class DocumentEngine {
 		}
 		if (section != null) {
 			preamble = "*Section: " + section + "*\n" + preamble;
-		}
-		if (defense) {
-			preamble = "";
 		}
 	}
 
