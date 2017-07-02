@@ -1,78 +1,119 @@
-
 document
-  clause Employment
-  clause ContractClaimant
+  clause Claimant
+  clause Defendant
+  clause Contract
+  clause ClaimantPerformance
+  clause RequestPayment
+  clause ParticularsOfLoss
+  clause DefendantBreach
+  clause PaymentDue
+  clause ParticularsOfLoss
 end
 
-clause Employment
-    question `What is your employment status?`
-
-    if `I am self employed` then `The claimant is self-employed` end
-    if `I am unemployed` then `The claimant is unemployed` end
-    
-    if `I am employed` then `The claimant is employed at $employer`
-		var employer `Where are you employed?`
-	end
-end
-
-clause ContractClaimant
-    template `Claimant: $name of $address $employment`   
-    
-    	sub employment Employment
-	    var name `What is your name?`
-	    var address `What is your address?`
-	end
-end
+clause ClaimantEmployment 
+  question `What is your employment status?`
  
-clause ContractOverview
-    template `By a written agreement date $contract_date between the Claimant and Defendant for $contract_purpose. The claimant agreed $claimant_agreement. The defendant agreed $defendant_agreement.`   
-    
-	    var contract_date `What is the contract date?`
-	    var contract_purpose `What was the purpose of the contract?`
-	    var claimant_agreement `What did the claimant agree in the contract?`
-	    var defendant_agreement `What did the defendant agree in the contract?`
-		end
-	end 
-
-
-clause Loss 
-  question `What did you lose out because of what you have described to me today? In financial terms please?`
-  
-  if `I lost money` then `The Claimant suffered financial loss in the amount of $amount`
-  var amount `What was the amount you lost?`
+  if `I am self-employed` then `The Claimant is self-employed` 
   end 
-
+  if `I am unemployed` then `The Claimant is unemployed` 
+  end 
+  if `I am employed` then `The Claimant is employed at $employer`
+    var employer `where are you employed?`
+  end 
+end
+ 
+clause Claimant 
+  template `The Claimant is $name of $address. $employment`
+    sub employment ClaimantEmployment
+    var name `What is your name?`
+    var address `What is your address?`
+  end
 end
 
+clause DefendantEmployment 
+  question `What is their employment status?`
  
-clause ClaimDetails 
- 
-template `The Defendant is $defendantname of $defendantaddress`
-var defendantname `who do you want to bring a claim against?`
-var defendantaddress `what the address of that person?`
+  if `I am self-employed` then `The Defendant is self-employed` 
+  end 
+  if `I am unemployed` then `The Defendant is unemployed` 
+  end 
+  if `I am employed` then `The Defendant is employed at $employer`
+    var employer `where are you employed?`
+  end 
 end 
  
-end 
+clause Defendant
+  template `The Defendant is $D_name of $D_address. $D_occupation.`
+	var D_name `who do you want to bring a claim against?`
+	var D_address `What’s their address?`
+	sub D_occupation DefendantEmployment
+  end
+end
  
 clause Typecontract 
-
-  question `How did you agree the contract?`
- 
-  if `We had a formal written contract` then `written contract dated` end
-  if `We agreed it in an email` then `written contract dated` end
-  if `We had a gentleman’s agreement and a handshake but didn’t write it down` then `oral contract made on` end
-  if `We agreed it in conversation` then `oral contract made on` end
- 
+  question `Which of these best describes the agreement you made?`
+    if `We had a formal written contract` then `written contract dated` end
+    if `We agreed it in an email` then `written contract dated` end
+    if `We had a gentleman’s agreement and a handshake but didn’t write it down` then `oral contract made on` end
+    if `We agreed it in conversation` then `oral contract made on` end 
 end 
  
 clause Contract 
- 
-  template `By $typecontract $datecontract between the Claimant and the Defendant for $contractpurpose, the Claimant agreed to $contentcontractclaimant and the Defendant agreed to $contentcontractdefendant`
-    var contractpurpose `what was the contract for?`
+  template `By $typecontract $datecontract between the Claimant and the Defendant, the Claimant agreed to $contentcontractclaimant and the Defendant agreed to $contentcontractdefendant` 
     var contentcontractclaimant `what did you agree to do for the Defendant?`
-    var contentcontractdefendant `what did the Defendant agree to do for you?` 
+    var contentcontractdefendant `what did the Defendant agree give you in return for this?`
     sub typecontract Typecontract 
     var datecontract `what date did you agree this?`
   end 
 end
  
+ 
+clause ClaimantPerformance  
+  template `Pursuant to the Contract the Claimant $claimantperformance`
+    var claimantperformance `What did you do to carry out your part of the agreement?`
+  end 
+end 
+ 
+clause RequestPayment 
+  template `The Claimant sent an invoice for the amount of $globalinvoiceamount on $dateinvoice`
+    var globalinvoiceamount `What was the amount of money you invoiced the Defendant for?` 
+    var dateinvoice `Please enter the date that you sent the invoice to the Defendant`
+  end
+end 
+ 
+ 
+clause PaymentRequest
+  question `Did you ask to be paid?`
+  if `yes` then `In spite of the Claimant requesting payment on $timeofrequest, the Defendant has not paid the Claimant the $globalinvoiceamount or any part of it.`
+    var timeofrequest `When did you request to be paid?`
+    var globalinvoiceamount `How much should you have been paid?`
+  end
+  if `no` then `` end
+end
+ 
+clause DefendantBreach
+ 
+  template `In breach of the contract, the Defendant has failed to pay the sum of $globalinvoiceamount by the due date or at all. $payment_request`
+    sub payment_request PaymentRequest
+    var globalinvoiceamount `How much should you have been paid?`
+  end
+end
+
+clause PaymentDue
+  template `Payment was due from the Defendant on $date.`
+    var date `When should you have been paid?`
+  end 
+end 
+ 
+clause ParticularsOfLoss  
+  question `What money did you lose because of this?`
+ 
+  if `I was not paid the money I was promised` then `The Claimant suffered financial loss in the amount of $amount` 
+    var amount `how much money were you promised?`
+  end 
+ 
+  if `My reputation was damaged in the industry’ then ‘The Claimant suffered reputational damage and consequently a financial loss of $reputationalloss`
+    var reputationaloss `Please give me a figure for what you think the damage to your reputation cost you?`
+  end 
+ 
+end 

@@ -78,8 +78,10 @@ public class Template {
 	public Template create(String path) {
 		Template t = new Template();
 		t.templateString = templateString;
-		for (Entry<String, Variable> var : replacements.entrySet())
-			t.replacements.put(var.getKey(), var.getValue().create(path));
+		for (Entry<String, Variable> var : replacements.entrySet()) {
+			String key = var.getKey();
+			t.replacements.put(key, var.getValue().create(key.startsWith("global") ? null : path));
+		}
 		
 		return t;
 	}

@@ -96,7 +96,11 @@ public class Variable {
 		if (clause != null) 
 			v.clause = clause.create(path);
 		v.questionText = questionText;
-		v.scope = path + "." + scope;
+		if (path == null) {
+			v.scope = "GLOBAL";
+		} else {
+		  v.scope = path + "." + scope;
+		}
 		
 		return v;
 	}
